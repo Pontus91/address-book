@@ -29,9 +29,12 @@ const ApplicationContextProvider = ({ children }) => {
          * a user by ID and the creators have recommended that you dont use id
          * as a primary key, some users ID from the API is also broken
          */
-        data.results.forEach((user, i) => user.id = i + 1);
-        dispatch(updateContactsData(data.results));
-      }).catch(error => {
+        const contacts = data.results.map((user, i) => {
+          return { ...user, id: (user.id = i + 1) };
+        });
+        dispatch(updateContactsData(contacts));
+      })
+      .catch((error) => {
         dispatch(updateErrorText(error));
       });
   }, []);

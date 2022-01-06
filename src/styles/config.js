@@ -28,12 +28,22 @@ const themeColors = {
   white: {
     500: '#fff',
   },
+  black: {
+    400: '#505050',
+    500: '#111'
+  },
+  pink: {
+    100: '#f9f9f9',
+    200: '#f3f3f3'
+  },
   gray: {
+    100: '#ebebeb',
     500: '#718096',
     900: '#171923',
   },
   shadows: {
-    primary: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+    primary: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+    secondary: '#17192354',
   }
 }
 

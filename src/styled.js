@@ -17,6 +17,12 @@ const GlobalStyling = createGlobalStyle`
     font-weight: 500;
   }
 
+  label {
+    font-size: 1rem;
+    font-family: ${fonts.body};
+    color: ${themeColors.gray[500]};
+  }
+
   h1 {
     font-family: ${fonts.heading};
     font-weight: 700;
