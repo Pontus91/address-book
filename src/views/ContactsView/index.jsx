@@ -40,9 +40,19 @@ const ContactsView = () => {
   });
 
   /**
-   * Takes input value and filters contacts.
+   * Takes an array of strings
+   * and lowercase them all
+   * @param arr 
+   */
+  const handleLowercase = (arr) => {
+    const convertStrings = arr.map(string => string.toLowerCase());
+    return convertStrings;
+  }
+
+  /**
    * Using lowercase on all so no mismatch
-   * @param e
+   * Update local state to show what to render
+   * @param searchTerm
    */
   const handleSearch = (searchTerm) => {
     if (searchTerm.length > 0) {
@@ -50,16 +60,19 @@ const ContactsView = () => {
     } else {
       setSearching(false);
     }
-    const searchVal = searchTerm.toLowerCase();
+
     const filteredContacts = state.contacts.filter((user) => {
-      return (
-        user.name.first.toLowerCase().includes(searchVal) ||
-        user.name.first.toLowerCase().includes(searchVal) ||
-        user.location.country.toLowerCase().includes(searchVal) ||
-        user.location.city.toLowerCase().includes(searchVal)
-      );
-    });
-    dispatch(updateSearchResult(filteredContacts));
+      const propsToLowercase = [
+        user.name.first,
+        user.name.last,
+        user.location.country,
+        user.location.city,
+      ];
+      const userValues = handleLowercase(propsToLowercase)
+      return userValues.some(value => value.includes(searchTerm.toLowerCase()));
+    })
+
+    dispatch(updateSearchResult(filteredContacts))
   };
 
   return (
