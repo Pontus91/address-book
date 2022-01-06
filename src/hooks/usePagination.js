@@ -12,6 +12,11 @@ const usePagination = ({ itemsPerPage, itemAmount }) => {
   const lastPageIndex = currentPage * itemsPerPage;
   const firstPageIndex = lastPageIndex - itemsPerPage;
 
+  /**
+   * In the functions below i use localStorage to save
+   * the current page, so that the user can come back to the correct page
+   * after visiting a detailed page of a user
+   */
   const nextPage = () => {
     if (currentPage === totalPages) return;
     const newPage = currentPage + 1;

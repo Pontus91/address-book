@@ -19,7 +19,7 @@ const ApplicationContextProvider = ({ children }) => {
     const fetchContacts = async () => {
       try {
         const response = await fetch(
-          'https://randomuser.me/api/?page=1&results=100&seed=employees&exc=login,gender,cell,id',
+          'https://randomuser.me/api/?page=1&results=1000&seed=employees&exc=login,gender,cell,id',
           {
             method: 'GET',
           }

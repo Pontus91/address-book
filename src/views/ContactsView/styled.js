@@ -55,7 +55,7 @@ export const StyledGrid = styled.div`
 
 export const StyledPagination = styled.div`
   width: 100%;
-  display: flex;
+  display: ${({ disabled }) => (disabled ? 'none' : 'flex')};
   flex-direction: row;
   align-items: center;
   justify-content: center;

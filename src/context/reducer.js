@@ -1,5 +1,10 @@
 import { actionTypes } from './actions';
 
+/**
+ * Simple reducer for updating our state.
+ * @param state
+ * @param action
+ */
 const applicationReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_CONTACTS:

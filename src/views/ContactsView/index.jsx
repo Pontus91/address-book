@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { ApplicationContext } from '../../context';
 import Wrapper from '../../components/Wrapper';
 import Input from '../../components/Input';
@@ -6,7 +7,6 @@ import Card from '../../components/Card';
 import Dropdown from '../../components/Dropdown';
 import { updateSearchResult } from '../../context/actions';
 import { sortTypes } from '../../constants/sort';
-import ClipLoader from 'react-spinners/ClipLoader';
 import {
   ContactsContainer,
   SearchContainer,
@@ -42,12 +42,12 @@ const ContactsView = () => {
   /**
    * Takes an array of strings
    * and lowercase them all
-   * @param arr 
+   * @param arr
    */
   const handleLowercase = (arr) => {
-    const convertStrings = arr.map(string => string.toLowerCase());
+    const convertStrings = arr.map((string) => string.toLowerCase());
     return convertStrings;
-  }
+  };
 
   /**
    * Using lowercase on all so no mismatch
@@ -68,11 +68,13 @@ const ContactsView = () => {
         user.location.country,
         user.location.city,
       ];
-      const userValues = handleLowercase(propsToLowercase)
-      return userValues.some(value => value.includes(searchTerm.toLowerCase()));
-    })
+      const userValues = handleLowercase(propsToLowercase);
+      return userValues.some((value) =>
+        value.includes(searchTerm.toLowerCase())
+      );
+    });
 
-    dispatch(updateSearchResult(filteredContacts))
+    dispatch(updateSearchResult(filteredContacts));
   };
 
   return (
@@ -88,7 +90,7 @@ const ContactsView = () => {
           <Input callback={handleSearch} placeholder='Search contacts' />
           <Dropdown />
         </SearchContainer>
-        { searching && state.searchResult.length === 0 && (
+        {searching && state.searchResult.length === 0 && (
           <h2>No contacts found</h2>
         )}
         <StyledGrid>
@@ -102,20 +104,20 @@ const ContactsView = () => {
                 .slice(firstPageIndex, lastPageIndex)
                 .map((data, i) => <Card key={i} {...data} />)}
         </StyledGrid>
-        {!state.loading && state.searchResult.length > 0 && (
-          <StyledPagination>
-            <IconButton onClick={prevPage} disabled={currentPage === 1}>
-              <HiChevronDoubleLeft />
-            </IconButton>
-            <TextButton>{currentPage}</TextButton>
-            <IconButton
-              onClick={nextPage}
-              disabled={currentPage === totalPages}
-            >
-              <HiChevronDoubleRight />
-            </IconButton>
-          </StyledPagination>
-        )}
+        {(!state.loading && (
+            <StyledPagination disabled={searching && state.searchResult.length === 0}>
+              <IconButton onClick={prevPage} disabled={currentPage === 1}>
+                <HiChevronDoubleLeft />
+              </IconButton>
+              <TextButton>{currentPage}</TextButton>
+              <IconButton
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+              >
+                <HiChevronDoubleRight />
+              </IconButton>
+            </StyledPagination>
+          ))}
       </Wrapper>
     </ContactsContainer>
   );
