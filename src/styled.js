@@ -15,6 +15,10 @@ const GlobalStyling = createGlobalStyle`
   a {
     text-decoration: none;
     font-weight: 500;
+    font-size: .875rem;
+    line-height: 1.5rem;
+    color: ${themeColors.gray[500]};
+    margin-bottom: .5rem;
   }
 
   label {

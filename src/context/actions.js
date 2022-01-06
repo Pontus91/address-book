@@ -7,6 +7,7 @@ const actionTypes = {
   UPDATE_ERRORTEXT: 'UPDATE_ERRORTEXT',
   UPDATE_SEARCH_RESULT: 'UPDATE_SEARCH_RESULT',
   UPDATE_SORTING: 'UPDATE_SORTING',
+  UPDATE_LOADING: 'UPDATE_LOADING',
 }
 
 /**
@@ -45,10 +46,20 @@ const updateSortBy = sortType => ({
   payload: sortType,
 })
 
+/**
+ * Update loading state
+ * @param status
+ */
+const updateLoading = status => ({
+  type: actionTypes.UPDATE_LOADING,
+  payload: status,
+})
+
 export {
   actionTypes,
   updateContactsData,
   updateErrorText,
   updateSearchResult,
-  updateSortBy
+  updateSortBy,
+  updateLoading
 }

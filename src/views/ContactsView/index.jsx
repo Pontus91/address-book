@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ApplicationContext } from '../../context';
 import Wrapper from '../../components/Wrapper';
 import Input from '../../components/Input';
@@ -6,6 +6,7 @@ import Card from '../../components/Card';
 import Dropdown from '../../components/Dropdown';
 import { updateSearchResult } from '../../context/actions';
 import { sortTypes } from '../../constants/sort';
+import ClipLoader from 'react-spinners/ClipLoader';
 import {
   ContactsContainer,
   SearchContainer,
@@ -14,12 +15,14 @@ import {
   StyledPagination,
   IconButton,
   TextButton,
+  Centered,
 } from './styled';
 import usePagination from '../../hooks/usePagination';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 
 const ContactsView = () => {
   const { state, dispatch } = useContext(ApplicationContext);
+  const [searching, setSearching] = useState(false);
 
   const {
     totalPages,
@@ -41,8 +44,13 @@ const ContactsView = () => {
    * Using lowercase on all so no mismatch
    * @param e
    */
-  const handleSearch = (e) => {
-    const searchVal = e.target.value.toLowerCase();
+  const handleSearch = (searchTerm) => {
+    if (searchTerm.length > 0) {
+      setSearching(true);
+    } else {
+      setSearching(false);
+    }
+    const searchVal = searchTerm.toLowerCase();
     const filteredContacts = state.contacts.filter((user) => {
       return (
         user.name.first.toLowerCase().includes(searchVal) ||
@@ -58,17 +66,20 @@ const ContactsView = () => {
     <ContactsContainer>
       <Wrapper>
         <h1>Contacts</h1>
+        <Centered>
+          {state.errorText.length > 0 && <h2>{state.errorText}</h2>}
+        </Centered>
+        <Centered>{state.loading && <ClipLoader />}</Centered>
         <SearchContainer>
           <SearchIcon size={21} />
-          <Input
-            onChange={handleSearch}
-            type='text'
-            placeholder='Search contacts'
-          />
+          <Input callback={handleSearch} placeholder='Search contacts' />
           <Dropdown />
         </SearchContainer>
+        { searching && state.searchResult.length === 0 && (
+          <h2>No contacts found</h2>
+        )}
         <StyledGrid>
-          {state.searchResult.length > 0
+          {searching
             ? state.searchResult
                 .sort(sortTypes[state.sortBy].fn)
                 .slice(firstPageIndex, lastPageIndex)
@@ -78,15 +89,20 @@ const ContactsView = () => {
                 .slice(firstPageIndex, lastPageIndex)
                 .map((data, i) => <Card key={i} {...data} />)}
         </StyledGrid>
-        <StyledPagination>
-          <IconButton onClick={prevPage} disabled={currentPage === 1}>
-            <HiChevronDoubleLeft />
-          </IconButton>
-          <TextButton>{currentPage}</TextButton>
-          <IconButton onClick={nextPage} disabled={currentPage === totalPages}>
-            <HiChevronDoubleRight />
-          </IconButton>
-        </StyledPagination>
+        {!state.loading && state.searchResult.length > 0 && (
+          <StyledPagination>
+            <IconButton onClick={prevPage} disabled={currentPage === 1}>
+              <HiChevronDoubleLeft />
+            </IconButton>
+            <TextButton>{currentPage}</TextButton>
+            <IconButton
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+            >
+              <HiChevronDoubleRight />
+            </IconButton>
+          </StyledPagination>
+        )}
       </Wrapper>
     </ContactsContainer>
   );

@@ -12,6 +12,9 @@ const applicationReducer = (state, action) => {
     case actionTypes.UPDATE_SORTING: {
       return { ...state, sortBy: action.payload };
     }
+    case actionTypes.UPDATE_LOADING: {
+      return { ...state, loading: action.payload };
+    }
     default:
       return state;
   }

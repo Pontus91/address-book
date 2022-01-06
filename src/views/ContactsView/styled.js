@@ -6,6 +6,7 @@ export const ContactsContainer = styled.section`
   min-height: 100vh;
   width: 100%;
   background: ${themeColors.pink[100]};
+  position: relative;
 `;
 
 export const SearchContainer = styled.div`
@@ -19,6 +20,17 @@ export const SearchContainer = styled.div`
 export const SearchIcon = styled(BiSearchAlt)`
   position: absolute;
   left: 1rem;
+`;
+
+export const Centered = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  h2 {
+    color: ${themeColors.error[500]};
+  }
 `;
 
 export const StyledGrid = styled.div`

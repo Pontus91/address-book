@@ -2,9 +2,10 @@ import {
   StyledInput
 } from './styled'
 
-const Input = ({ onChange, type, placeholder }) => {
+const Input = (props) => {
+  const getSearchValue = e => props.callback(e.target.value);
   return (
-    <StyledInput type={type} onChange={onChange} placeholder={placeholder} />
+    <StyledInput onChange={getSearchValue} placeholder={props.placeholder} value={props.searchTerm} />
   )
 }
 
